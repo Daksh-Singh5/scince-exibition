@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Tachyons and Teleportation</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            font-size: 50px;
+            font-weight: bold;
+            animation: fadeIn 3s ease-in-out forwards;
+        }
+
+        .button {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .button:hover {
+            background-color: #1565c0;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        footer {
+            margin-top: 30px;
+            color: white;
+            font-size: 16px;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>Welcome to the World of Tachyons and Teleportation!</header>
+
+    <button class="button" onclick="window.location.href='tachyons.html'">Enter the Universe</button>
+
+    <footer>
+        <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>
+    </footer>
+
+</body>
+</html>
