@@ -21,9 +21,24 @@
         }
 
         header {
-            font-size: 50px;
+            font-size: 40px;
             font-weight: bold;
             animation: fadeIn 3s ease-in-out forwards;
+        }
+
+        .container {
+            animation: zoomIn 1.5s ease-in-out;
+        }
+
+        .input-field {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            width: 60%;
+            text-align: center;
         }
 
         .button {
@@ -43,25 +58,18 @@
         }
 
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideIn {
-            0% {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         footer {
@@ -80,18 +88,57 @@
         footer a:hover {
             color: #ffffff;
         }
-
     </style>
 </head>
 <body>
-
-    <header>Welcome to the World of Tachyons and Teleportation!</header>
-
-    <button class="button" onclick="window.location.href='tachyons.html'">Enter the Universe</button>
-
+    <header id="welcome-text">Welcome to the World of Tachyons and Teleportation!</header>
+    
+    <div class="container" id="input-container">
+        <p id="question-text">What is your name?</p>
+        <input type="text" class="input-field" id="user-input" placeholder="Enter here...">
+        <button class="button" onclick="nextStep()">Next</button>
+    </div>
+    
+    <button class="button" id="enter-btn" style="display: none;" onclick="window.location.href='tachyons.html'">Enter the Universe</button>
+    
     <footer>
         <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>
     </footer>
 
+    <script>
+        let step = 0;
+        let userData = { name: '', color: '', spaceInterest: '' };
+        const questions = [
+            "What is your name?",
+            "What is your favorite color?",
+            "What fascinates you about space?"
+        ];
+
+        function nextStep() {
+            const inputField = document.getElementById("user-input");
+            const questionText = document.getElementById("question-text");
+            
+            if (inputField.value.trim() === "") {
+                alert("Please enter a response!");
+                return;
+            }
+
+            if (step === 0) userData.name = inputField.value;
+            if (step === 1) userData.color = inputField.value;
+            if (step === 2) userData.spaceInterest = inputField.value;
+            
+            step++;
+            inputField.value = "";
+            
+            if (step < questions.length) {
+                questionText.innerText = questions[step];
+            } else {
+                document.body.style.backgroundColor = userData.color;
+                document.getElementById("welcome-text").innerText = `Welcome, ${userData.name}, to the World of Tachyons & Teleportation!`;
+                document.getElementById("input-container").innerHTML = `<p>${userData.name}, it's fascinating that you love '${userData.spaceInterest}' about space! 🚀</p>`;
+                document.getElementById("enter-btn").style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
