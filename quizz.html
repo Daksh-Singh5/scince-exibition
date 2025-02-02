@@ -51,6 +51,10 @@
         .options button:hover {
             background: #6c3483;
         }
+        .options button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
         #result {
             font-size: 22px;
             font-weight: bold;
@@ -71,19 +75,9 @@
         #next-btn:hover {
             background-color: #d4ac0d;
         }
-        .nav-links {
-            margin-top: 20px;
-        }
-        .nav-links a {
-            color: #f1c40f;
-            text-decoration: none;
-            font-size: 18px;
-            margin: 10px;
-        }
     </style>
 </head>
 <body>
-
     <header>Fun Quiz: Tachyons & Teleportation</header>
     <div class="container">
         <h2>Test Your Knowledge!</h2>
@@ -91,11 +85,6 @@
         <div class="options" id="options-container"></div>
         <p id="result"></p>
         <button id="next-btn" onclick="nextQuestion()">Next Question</button>
-    </div>
-
-    <div class="nav-links">
-        <a href="teleportation.html">Go to Teleportation Page</a> |
-        <a href="tachyons.html">Go to Tachyon Project</a>
     </div>
 
     <script>
@@ -131,7 +120,7 @@
             questionData.options.forEach(option => {
                 const button = document.createElement("button");
                 button.innerText = option;
-                button.onclick = () => checkAnswer(option);
+                button.onclick = () => checkAnswer(button, option);
                 optionsContainer.appendChild(button);
             });
 
@@ -139,14 +128,10 @@
             document.getElementById("next-btn").style.display = "none";
         }
 
-        function checkAnswer(selected) {
+        function checkAnswer(selectedButton, selected) {
             const correctAnswer = questions[currentQuestion].answer;
-            if (selected === correctAnswer) {
-                score++;
-                document.getElementById("result").innerText = "Correct! 🎉";
-            } else {
-                document.getElementById("result").innerText = `Wrong! The correct answer was: ${correctAnswer}`;
-            }
+            document.querySelectorAll(".options button").forEach(button => button.disabled = true);
+            document.getElementById("result").innerText = selected === correctAnswer ? "Correct! 🎉" : `Wrong! The correct answer was: ${correctAnswer}`;
             document.getElementById("next-btn").style.display = "block";
         }
 
@@ -157,6 +142,12 @@
 
         loadQuestion();
     </script>
-
+    <footer>
+        
+        <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>
+        <p><a href="telepotation.html" style="color: #ffeb3b; text-decoration: none;">Go to Teleportation Project</a></p>
+        <a href="tachyons.html" style="color: #ffeb3b; text-decoration: none;">Go to Tachyons Project</a></p>
+        <a href="about.html" style="color: #ffeb3b; text-decoration: none;">Know About Us</a></p>
+    </footer>
 </body>
 </html>

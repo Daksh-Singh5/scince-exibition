@@ -62,6 +62,16 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes fadeInNew {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
         @keyframes slideIn {
             0% { transform: translateY(50px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
@@ -131,7 +141,11 @@
             inputField.value = "";
             
             if (step < questions.length) {
-                questionText.innerText = questions[step];
+                questionText.style.animation = "fadeOut 0.5s";
+                setTimeout(() => {
+                    questionText.innerText = questions[step];
+                    questionText.style.animation = "fadeInNew 0.5s";
+                }, 500);
             } else {
                 document.body.style.backgroundColor = userData.color;
                 document.getElementById("welcome-text").innerText = `Welcome, ${userData.name}, to the World of Tachyons & Teleportation!`;
