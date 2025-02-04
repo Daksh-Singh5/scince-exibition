@@ -1,153 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun Quiz: Tachyons & Teleportation</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1b1b1b;
-            color: white;
-            text-align: center;
-        }
-        header {
-            background-color: #8e44ad;
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #2c2c2c;
-            box-shadow: 0px 0px 10px rgba(142, 68, 173, 0.5);
-            border-radius: 10px;
-        }
-        h2 {
-            color: #f1c40f;
-        }
-        .question {
-            font-size: 20px;
-            margin: 15px 0;
-        }
-        .options button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            font-size: 18px;
-            background: #8e44ad;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .options button:hover {
-            background: #6c3483;
-        }
-        .options button:disabled {
-            background: #555;
-            cursor: not-allowed;
-        }
-        #result {
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 20px;
-            color: #f1c40f;
-        }
-        #next-btn {
-            display: none;
-            background-color: #f1c40f;
-            color: black;
-            font-size: 18px;
-            padding: 10px 20px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #next-btn:hover {
-            background-color: #d4ac0d;
-        }
-    </style>
-</head>
-<body>
-    <header>Fun Quiz: Tachyons & Teleportation</header>
-    <div class="container">
-        <h2>Test Your Knowledge!</h2>
-        <p class="question" id="question-text"></p>
-        <div class="options" id="options-container"></div>
-        <p id="result"></p>
-        <button id="next-btn" onclick="nextQuestion()">Next Question</button>
-    </div>
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Fun Quiz: Tachyons, Teleportation & Periscopes</title>  
+    <style>  
+        body {  
+            font-family: 'Poppins', sans-serif;  
+            margin: 0;  
+            padding: 0;  
+            background-color: #1b1b1b;  
+            color: white;  
+            text-align: center;  
+        }  
+        header {  
+            background-color: #8e44ad;  
+            color: white;  
+            padding: 20px;  
+            font-size: 28px;  
+            font-weight: bold;  
+        }  
+        .container {  
+            max-width: 800px;  
+            margin: 20px auto;  
+            padding: 20px;  
+            background: #2c2c2c;  
+            box-shadow: 0px 0px 10px rgba(142, 68, 173, 0.5);  
+            border-radius: 10px;  
+        }  
+        h2 {  
+            color: #f1c40f;  
+        }  
+        .question {  
+            font-size: 20px;  
+            margin: 15px 0;  
+        }  
+        .options button {  
+            display: block;  
+            width: 100%;  
+            margin: 10px 0;  
+            padding: 10px;  
+            font-size: 18px;  
+            background: #8e44ad;  
+            color: white;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            transition: background 0.3s;  
+        }  
+        .options button:hover {  
+            background: #6c3483;  
+        }  
+        .options button:disabled {  
+            background: #555;  
+            cursor: not-allowed;  
+        }  
+        #result {  
+            font-size: 22px;  
+            font-weight: bold;  
+            margin-top: 20px;  
+            color: #f1c40f;  
+        }  
+        #next-btn {  
+            display: none;  
+            background-color: #f1c40f;  
+            color: black;  
+            font-size: 18px;  
+            padding: 10px 20px;  
+            margin-top: 20px;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+        }  
+        #next-btn:hover {  
+            background-color: #d4ac0d;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <header>Fun Quiz: Tachyons, Teleportation & Periscopes</header>  
+    <div class="container">  
+        <h2>Test Your Knowledge!</h2>  
+        <p class="question" id="question-text"></p>  
+        <div class="options" id="options-container"></div>  
+        <p id="result"></p>  
+        <button id="next-btn" onclick="nextQuestion()">Next Question</button>  
+    </div>  
 
-    <script>
-        const questions = [
-            { question: "What is the theoretical particle that travels faster than light?", options: ["Photon", "Electron", "Tachyon", "Neutrino"], answer: "Tachyon" },
-            { question: "What scientific principle is used in quantum teleportation?", options: ["Gravity Waves", "Quantum Entanglement", "String Theory", "Black Holes"], answer: "Quantum Entanglement" },
-            { question: "Which famous sci-fi series features teleportation via 'beaming'?", options: ["Star Wars", "Doctor Who", "Star Trek", "Interstellar"], answer: "Star Trek" },
-            { question: "If you travel faster than light, what could theoretically happen?", options: ["You go to the past", "You become invisible", "You create a black hole", "Nothing changes"], answer: "You go to the past" },
-            { question: "How does teleportation work in theory?", options: ["You walk into a portal", "You break down and rebuild particles", "You turn into energy", "You disappear"], answer: "You break down and rebuild particles" },
-            { question: "Who developed the theory of special relativity?", options: ["Isaac Newton", "Nikola Tesla", "Albert Einstein", "Stephen Hawking"], answer: "Albert Einstein" },
-            { question: "What is the Heisenberg Uncertainty Principle related to?", options: ["Time Travel", "Wave-Particle Duality", "Quantum Superposition", "Measurement of Particles"], answer: "Measurement of Particles" },
-            { question: "What is the phenomenon where particles appear to be connected over vast distances?", options: ["Time Dilation", "Quantum Superposition", "Quantum Entanglement", "String Theory"], answer: "Quantum Entanglement" },
-            { question: "Which famous paradox is associated with faster-than-light travel?", options: ["Schrödinger's Cat", "The Twin Paradox", "The Grandfather Paradox", "Olbers' Paradox"], answer: "The Grandfather Paradox" },
-            { question: "Which type of hypothetical bridge in space-time could allow teleportation?", options: ["Black Hole", "White Hole", "Warp Drive", "Wormhole"], answer: "Wormhole" }
-        ];
+    <script>  
+        const questions = [  
+            { question: "What is the theoretical particle that travels faster than light?", options: ["Photon", "Electron", "Tachyon", "Neutrino"], answer: "Tachyon" },  
+            { question: "What scientific principle is used in quantum teleportation?", options: ["Gravity Waves", "Quantum Entanglement", "String Theory", "Black Holes"], answer: "Quantum Entanglement" },  
+            { question: "Which famous sci-fi series features teleportation via 'beaming'?", options: ["Star Wars", "Doctor Who", "Star Trek", "Interstellar"], answer: "Star Trek" },  
+            { question: "If you travel faster than light, what could theoretically happen?", options: ["You go to the past", "You become invisible", "You create a black hole", "Nothing changes"], answer: "You go to the past" },  
+            { question: "How does teleportation work in theory?", options: ["You walk into a portal", "You break down and rebuild particles", "You turn into energy", "You disappear"], answer: "You break down and rebuild particles" },  
+            { question: "Who developed the theory of special relativity?", options: ["Isaac Newton", "Nikola Tesla", "Albert Einstein", "Stephen Hawking"], answer: "Albert Einstein" },  
+            { question: "What is the Heisenberg Uncertainty Principle related to?", options: ["Time Travel", "Wave-Particle Duality", "Quantum Superposition", "Measurement of Particles"], answer: "Measurement of Particles" },  
+            { question: "Which famous paradox is associated with faster-than-light travel?", options: ["Schrödinger's Cat", "The Twin Paradox", "The Grandfather Paradox", "Olbers' Paradox"], answer: "The Grandfather Paradox" },  
+            { question: "Which type of hypothetical bridge in space-time could allow teleportation?", options: ["Black Hole", "White Hole", "Warp Drive", "Wormhole"], answer: "Wormhole" },  
+            
+            // New Periscope Questions  
+            { question: "What is the primary function of a periscope?", options: ["To see underwater", "To observe from a concealed position", "To measure distances", "To communicate"], answer: "To observe from a concealed position" },  
+            { question: "Which two optical components are primarily used in a periscope?", options: ["Lenses and mirrors", "Prisms and lenses", "Mirrors and prisms", "Lenses and filters"], answer: "Mirrors and prisms" },  
+            { question: "In which type of vehicle is a periscope commonly used?", options: ["Submarine", "Airplane", "Car", "Bicycle"], answer: "Submarine" },  
+            { question: "What principle does a periscope primarily rely on?", options: ["Reflection of light", "Refraction of light", "Diffraction of light", "Absorption of light"], answer: "Reflection of light" },  
+            { question: "What is a common application of a periscope outside of military use?", options: ["Photography", "Astronomy", "Education", "Medical examinations"], answer: "Education" }  
+        ];  
 
-        let currentQuestion = 0;
-        let score = 0;
+        let currentQuestion = 0;  
+        let score = 0;  
 
-        function loadQuestion() {
-            if (currentQuestion >= questions.length) {
-                document.querySelector(".container").innerHTML = `<h2>Quiz Completed!</h2>
-                <p>Your Score: ${score}/${questions.length}</p>`;
-                return;
-            }
+        function loadQuestion() {  
+            if (currentQuestion >= questions.length) {  
+                document.querySelector(".container").innerHTML = `<h2>Quiz Completed!</h2><p>Your Score: ${score}/${questions.length}</p>`;  
+                return;  
+            }  
 
-            const questionData = questions[currentQuestion];
-            document.getElementById("question-text").innerText = questionData.question;
+            const questionData = questions[currentQuestion];  
+            document.getElementById("question-text").innerText = questionData.question;  
 
-            const optionsContainer = document.getElementById("options-container");
-            optionsContainer.innerHTML = "";
+            const optionsContainer = document.getElementById("options-container");  
+            optionsContainer.innerHTML = "";  
 
-            questionData.options.forEach(option => {
-                const button = document.createElement("button");
-                button.innerText = option;
-                button.onclick = () => checkAnswer(button, option);
-                optionsContainer.appendChild(button);
-            });
+            questionData.options.forEach(option => {  
+                const button = document.createElement("button");  
+                button.innerText = option;  
+                button.onclick = () => checkAnswer(button, option);  
+                optionsContainer.appendChild(button);  
+            });  
 
-            document.getElementById("result").innerText = "";
-            document.getElementById("next-btn").style.display = "none";
-        }
+            document.getElementById("result").innerText = "";  
+            document.getElementById("next-btn").style.display = "none";  
+        }  
 
-        function checkAnswer(selectedButton, selected) {
-            const correctAnswer = questions[currentQuestion].answer;
-            document.querySelectorAll(".options button").forEach(button => button.disabled = true);
-            document.getElementById("result").innerText = selected === correctAnswer ? "Correct! 🎉" : `Wrong! The correct answer was: ${correctAnswer}`;
-            document.getElementById("next-btn").style.display = "block";
-        }
+        function checkAnswer(selectedButton, selected) {  
+            const correctAnswer = questions[currentQuestion].answer;  
+            document.querySelectorAll(".options button").forEach(button => button.disabled = true);  
 
-        function nextQuestion() {
-            currentQuestion++;
-            loadQuestion();
-        }
+            if (selected === correctAnswer) {  
+                document.getElementById("result").innerText = "Correct! 🎉";  
+                score++; // Increment the score for a correct answer  
+            } else {  
+                document.getElementById("result").innerText = `Wrong! The correct answer was: ${correctAnswer}`;  
+            }  
 
-        loadQuestion();
-    </script>
-    <footer>
-        
-        <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>
-        <p><a href="telepotation.html" style="color: #ffeb3b; text-decoration: none;">Go to Teleportation Project</a></p>
-        <a href="tachyons.html" style="color: #ffeb3b; text-decoration: none;">Go to Tachyons Project</a></p>
-        <a href="about.html" style="color: #ffeb3b; text-decoration: none;">Know About Us</a></p>
-    </footer>
-</body>
+            document.getElementById("next-btn").style.display = "block";  
+        }  
+
+        function nextQuestion() {  
+            currentQuestion++;  
+            loadQuestion();  
+        }  
+
+        loadQuestion();  
+    </script>  
+    <footer>  
+        <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>  
+        <p><a href="teleportation.html" style="color: #ffeb3b; text-decoration: none;">Go to Teleportation Project</a></p>  
+        <p><a href="tachyons.html" style="color: #ffeb3b; text-decoration: none;">Go to Tachyons Project</a></p>  
+        <p><a href="about.html" style="color: #ffeb3b; text-decoration: none;">Know About Us</a></p>  
+    </footer>  
+</body>  
 </html>
