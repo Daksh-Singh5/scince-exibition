@@ -3,7 +3,7 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Fun Quiz: Tachyons, Teleportation & Periscopes</title>  
+    <title>Fun Quiz with Leaderboard</title>  
     <style>  
         body {  
             font-family: 'Poppins', sans-serif;  
@@ -28,9 +28,6 @@
             box-shadow: 0px 0px 10px rgba(142, 68, 173, 0.5);  
             border-radius: 10px;  
         }  
-        h2 {  
-            color: #f1c40f;  
-        }  
         .question {  
             font-size: 20px;  
             margin: 15px 0;  
@@ -51,10 +48,6 @@
         .options button:hover {  
             background: #6c3483;  
         }  
-        .options button:disabled {  
-            background: #555;  
-            cursor: not-allowed;  
-        }  
         #result {  
             font-size: 22px;  
             font-weight: bold;  
@@ -66,15 +59,47 @@
             background-color: #f1c40f;  
             color: black;  
             font-size: 18px;  
-            padding: 10px 20px;  
+            padding: 10px;  
             margin-top: 20px;  
             border: none;  
             border-radius: 5px;  
             cursor: pointer;  
         }  
-        #next-btn:hover {  
-            background-color: #d4ac0d;  
-        }  
+        /* Leaderboard Styles */
+        .leaderboard-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #2c2c2c;
+            box-shadow: 0px 0px 10px rgba(241, 196, 15, 0.5);
+            border-radius: 10px;
+            text-align: center;
+        }
+        #leaderboard {
+            list-style: none;
+            padding: 0;
+        }
+        #leaderboard li {
+            background: #8e44ad;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        #secret-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #secret-btn:hover {
+            background: #444;
+        }
     </style>  
 </head>  
 <body>  
@@ -86,6 +111,13 @@
         <p id="result"></p>  
         <button id="next-btn" onclick="nextQuestion()">Next Question</button>  
     </div>  
+
+    <!-- Leaderboard Section -->
+    <div class="leaderboard-container">
+        <h2>Leaderboard</h2>
+        <ul id="leaderboard"></ul>
+        <button id="secret-btn">⚙️ Admin Access</button>
+    </div>
 
     <script>  
         const questions = [  
@@ -106,29 +138,24 @@
             { question: "What principle does a periscope primarily rely on?", options: ["Reflection of light", "Refraction of light", "Diffraction of light", "Absorption of light"], answer: "Reflection of light" },  
             { question: "What is a common application of a periscope outside of military use?", options: ["Photography", "Astronomy", "Education", "Medical examinations"], answer: "Education" }  
         ];  
-
         let currentQuestion = 0;  
         let score = 0;  
 
         function loadQuestion() {  
             if (currentQuestion >= questions.length) {  
-                document.querySelector(".container").innerHTML = `<h2>Quiz Completed!</h2><p>Your Score: ${score}/${questions.length}</p>`;  
+                savePlayerScore();
                 return;  
             }  
-
             const questionData = questions[currentQuestion];  
             document.getElementById("question-text").innerText = questionData.question;  
-
             const optionsContainer = document.getElementById("options-container");  
             optionsContainer.innerHTML = "";  
-
             questionData.options.forEach(option => {  
                 const button = document.createElement("button");  
                 button.innerText = option;  
                 button.onclick = () => checkAnswer(button, option);  
                 optionsContainer.appendChild(button);  
             });  
-
             document.getElementById("result").innerText = "";  
             document.getElementById("next-btn").style.display = "none";  
         }  
@@ -136,14 +163,12 @@
         function checkAnswer(selectedButton, selected) {  
             const correctAnswer = questions[currentQuestion].answer;  
             document.querySelectorAll(".options button").forEach(button => button.disabled = true);  
-
             if (selected === correctAnswer) {  
                 document.getElementById("result").innerText = "Correct! 🎉";  
-                score++; // Increment the score for a correct answer  
+                score++;  
             } else {  
                 document.getElementById("result").innerText = `Wrong! The correct answer was: ${correctAnswer}`;  
             }  
-
             document.getElementById("next-btn").style.display = "block";  
         }  
 
@@ -151,14 +176,49 @@
             currentQuestion++;  
             loadQuestion();  
         }  
+        loadQuestion();
 
-        loadQuestion();  
+        // Leaderboard Logic
+        const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+        function updateLeaderboard() {
+            const leaderboardEl = document.getElementById("leaderboard");
+            leaderboardEl.innerHTML = "";
+            leaderboard.sort((a, b) => b.score - a.score).forEach(entry => {
+                const li = document.createElement("li");
+                li.textContent = `${entry.name} - ${entry.score} points`;
+                leaderboardEl.appendChild(li);
+            });
+        }
+
+        function adminLogin() {
+            const password = prompt("Enter Admin Password:");
+            if (password === "admin123") addNewPlayer();
+            else alert("Incorrect Password! ❌");
+        }
+
+        function addNewPlayer() {
+            const name = prompt("Enter Player Name:");
+            const score = parseInt(prompt("Enter Score:"), 10);
+            if (name && !isNaN(score)) {
+                leaderboard.push({ name, score });
+                localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+                updateLeaderboard();
+            } else alert("Invalid Input! ❌");
+        }
+
+        function savePlayerScore() {
+            const name = prompt("Enter Your Name to Save Score:");
+            if (name) {
+                leaderboard.push({ name, score });
+                localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+                updateLeaderboard();
+                document.querySelector(".container").innerHTML = `<h2>Quiz Completed!</h2><p>Your Score: ${score}/${questions.length}</p>`;
+            }
+        }
+
+        document.getElementById("secret-btn").addEventListener("click", adminLogin);
+        updateLeaderboard();
     </script>  
-    <footer>  
-        <p>Created for Science Exhibition | 2025 | By Daksh Singh</p>  
-        <p><a href="telepotation.html" style="color: #ffeb3b; text-decoration: none;">Go to Teleportation Project</a></p>  
-        <p><a href="tachyons.html" style="color: #ffeb3b; text-decoration: none;">Go to Tachyons Project</a></p>  
-        <p><a href="about.html" style="color: #ffeb3b; text-decoration: none;">Know About Us</a></p>  
-    </footer>  
 </body>  
 </html>
